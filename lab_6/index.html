@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab_6</title>
+</head>
+<style>
+    input {
+        margin: 5px;
+        width: 25em;
+        height: 35px;
+        border-radius: 15px;
+        background-color: #ffffff;
+        color: rgb(23, 60, 26);
+        font-size: 25px;
+    }
+
+    input:active {
+        background-color: #d2d7d2;
+    }
+
+    .button {
+        margin-top: 1em;
+        width: 10em;
+        height: 2em;
+        border-radius: 10px;
+        background-color: #c7fcc9;
+        color: rgb(23, 60, 26);
+        font-size: 3em;
+        сursor: pointer;
+        background-color: rgb(111, 226, 146);
+    }
+
+    body {
+        background-color: rgb(159, 255, 199);
+    }
+</style>
+<body>
+<div>
+
+     <form>
+    <input class="from-email"  id="from-email" type="email" placeholder="from" required> <br>
+    <input class="from-email-password" id="from-email-password" type="password" placeholder="password" required><br>
+    <input class="to-email" id="to-email" type="email" placeholder="to" required><br>
+    <input class="message" id="message" type="text" placeholder="message"><br>
+    <input class="button" type="button" onclick="sendMessage()" value="Send">
+     </form>
+</div>
+
+<script>
+    const sendMessage = async () => {
+        const fromEmail = document.querySelector('.from-email').value;
+        const fromEmailPassword = document.querySelector('.from-email-password').value;
+        const toEmail = document.querySelector('.to-email').value;
+        const message = document.querySelector('.message').value;
+
+        await fetch('http://localhost:3000/', {
+            method: 'POST', mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'text/html'
+            },
+            body: JSON.stringify({
+                from: fromEmail,
+                password: fromEmailPassword,
+                to: toEmail,
+                message: message
+            })
+        });
+    };
+</script>
+</body>
+</html>

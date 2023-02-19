@@ -1,0 +1,15 @@
+{
+  "name": "m0603_krisss",
+  "version": "1.0.0",
+  "description": "",
+  "main": "m603.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "m0603_krisss": "^1.0.0",
+    "nodemailer": "^6.8.0"
+  }
+}
