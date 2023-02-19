@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab_5</title>
+<style>
+        table{
+            border-collapse: collapse; 
+            width: 1400px;
+        }
+
+        table.list{
+            width:100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        input[type=text], input[type=number], input[type=date] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 32%;
+            background-color: #ddd;
+            color: #000;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        a {
+            cursor: pointer;
+            text-decoration: underline;
+            color: #5f00ee;
+            margin-right: 4px;
+        }
+</style>
+</head>
+
+<body>
+  <div>
+    <table>
+        <tr> 
+            <td> 
+                <div>
+                  <label>ID</label>
+                  <input type="number" name="id" id="id" min="0">
+                </div>
+              <div>
+                  <label>Name</label>
+                  <input type="text" name="pname" id="pname">
+              </div>
+              <div>
+                  <label>Birthday</label>
+                  <input type="date" name="bday" id="bday">
+              </div>
+              <div>
+                  <button style="background-color: rgba(63, 44, 86, 0.301);" onclick="Get()">Get</button>
+                  <button style="background-color: rgba(63, 44, 86, 0.301);" onclick="Post()">Post</button>
+                  <button style="background-color: rgba(63, 44, 86, 0.301);" onclick="Put()">Put</button>
+              </div>
+          </td>
+          <td>
+
+            <table class="list" id="personList">
+              <thead style="background-color: rgba(89, 64, 136, 0.3)">    
+                  <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Birthday</th>
+                      <th></th>
+                  </tr>
+              </thead>
+              <tbody>
+              </tbody>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+function Get(){
+  var table = document.getElementById("personList").getElementsByTagName('tbody')[0];
+            table.innerHTML = "";
+            fetch('http://localhost:5000/api/db', {    
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json()) 
+            .then((pdata)=> {                   // pdata - response data
+                pdata.forEach(element => {
+                    var table =document.getElementById("personList").getElementsByTagName('tbody')[0];
+                    var newRow = table.insertRow(table.length);
+                    cell1=newRow.insertCell(0);
+                    cell1.innerHTML = element.id;
+                    cell2 = newRow.insertCell(1);
+                    cell2.innerHTML = element.pname;
+                    cell3 = newRow.insertCell(2);
+                    cell3.innerHTML = element.bday;
+                    cell3 = newRow.insertCell(3);
+                    cell3.innerHTML = `<a onClick="Edit(this)">Edit</a>
+                                       <a onClick="Delete(this)">Delete</a>`;
+                });
+            })
+        } 
+
+      function Post() {
+        var table = document.getElementById("personList").getElementsByTagName('tbody')[0];
+            table.innerHTML = "";
+            fetch("http://localhost:5000/api/db", {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                body: JSON.stringify({ id: parseInt(document.getElementById("id").value), pname: document.getElementById("pname").value, bday: document.getElementById("bday").value }) 
+            })
+            .then(response => response.text())  
+            .then((pdata) => 
+                alert(pdata)
+            )
+            .catch((messageError) => {
+                alert(errorMessage);
+            })
+            document.getElementById("id").value = "";  
+            document.getElementById("pname").value = "";
+            document.getElementById("bday").value = "";
+            Get();
+      }
+
+      function Edit(td) {
+        selectedRow = td.parentElement.parentElement; 
+            console.log(selectedRow);
+            document.getElementById("id").value = selectedRow.cells[0].innerHTML;  
+            document.getElementById("pname").value = selectedRow.cells[1].innerHTML;
+            document.getElementById("bday").value = selectedRow.cells[2].innerHTML;
+      }
+
+      function Put() {
+        var table = document.getElementById("personList").getElementsByTagName('tbody')[0];
+            table.innerHTML = "";
+            fetch("http://localhost:5000/api/db", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                body: JSON.stringify({ id: parseInt(id.value), pname: pname.value, bday: bday.value })
+            })
+                .then(res => res.text())
+                .then((pdata) =>
+                    alert(pdata))
+                .catch((errorMessage) => {
+                alert(errorMessage);
+            });
+            document.getElementById("id").value = "";
+            document.getElementById("pname").value = "";
+            document.getElementById("bday").value = "";
+            Get();
+      }
+
+      function Delete(td) {
+            var table = document.getElementById("personList").getElementsByTagName('tbody')[0];
+            table.innerHTML = "";
+            var del = td.parentElement.parentElement.cells[0].innerHTML;
+            fetch("http://localhost:5000/api/db?id=" + del, {
+                method: "DELETE",
+                mode: "cors",
+                headers: { "Content-Type": "application/json" },
+            })
+                .then((pdata) => 
+                    alert(pdata))
+                .catch((errorMessage) => {
+                alert(errorMessage);
+            });
+            document.getElementById("id").value = "";
+            document.getElementById("pname").value = "";
+            document.getElementById("bday").value = "";
+            Get();
+        }
+  </script>
+</body>
+</html>

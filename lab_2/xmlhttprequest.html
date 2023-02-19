@@ -1,0 +1,41 @@
+<DOCTYPE html>
+    <html lang="en">
+        <style>
+            body {
+color: rgb(0, 120, 145);
+size: 20px;
+text-shadow: 15px;
+font-family: Georgia, 'Times New Roman', Times, serif;
+font-weight: 200;
+background-color: rgba(182, 226, 255, 0.69);
+margin: 300px;
+            }
+            h1 {
+color: rgb(0, 108, 130);
+font-family: Georgia, 'Times New Roman', Times, serif;
+font-weight: 100;
+} 
+        </style>
+        <head>
+            <meta charset="UTF-8">
+            <title>Laboratory №2 (4)</title>
+        </head>
+        <body>
+            <h1 id="myFIO">My FIO: </h1>
+            <br>
+        </body>
+        <script>
+            const xmlHttpRequest = new XMLHttpRequest();
+            xmlHttpRequest.open('GET', 'http://localhost:5000/api/name', true);
+            xmlHttpRequest.onreadystatechange = function() {    
+            const body = document.getElementById('myFIO');
+            if (xmlHttpRequest.readyState === 4) {      // 4: request finished and response is ready
+                if (xmlHttpRequest.status === 200) {
+            body.innerText += xmlHttpRequest.responseText;
+        }
+    }
+}
+            xmlHttpRequest.send();
+       </script>
+    </html>
+</DOCTYPE>

@@ -1,0 +1,33 @@
+<DOCTYPE html>
+    <html>
+        <style>
+            body {
+color: rgb(142, 81, 2);
+size: 20px;
+text-shadow: 15px;
+font-family: Georgia, 'Times New Roman', Times, serif;
+font-weight: 200;
+background-color: rgb(255, 223, 182);
+            }
+        </style>
+        <head>
+            <meta name="viewport" content="width=device-width">
+            <title>Laboratory №2 (6)</title>
+        </head>
+        <body>
+            <h1 id='fio'>My FIO: </h1>
+        </body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>    <!-- подключение библиотеки jQuery -->
+<script>
+    let elem = $('#fio');       
+    $.ajax({                                                                                        // метод jQuery для выполнения HTTP-запросов
+        method: 'GET',          
+        url: '/api/name',       
+        success: (data)=>       
+        {
+            elem.append(data);
+        }
+    })
+</script>
+    </html>
+</DOCTYPE>

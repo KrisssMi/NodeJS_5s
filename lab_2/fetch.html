@@ -1,0 +1,27 @@
+<DOCTYPE html>
+    <html>
+        <style>
+            body {
+color: rgb(14, 113, 50);
+size: 20px;
+text-shadow: 15px;
+font-family: Georgia, 'Times New Roman', Times, serif;
+font-weight: 200;
+background-color: rgb(186, 255, 182);
+            }
+        </style>
+        <head>
+            <meta name="viewport" content="width=device-width">
+            <title>Laboratory №2 (5)</title>
+        </head>
+        <body>
+            <h1 id='fio'>Your FIO: </h1> <br>
+        </body>
+        <script>
+            let fio = document.getElementById("fio");           
+            fetch('http://localhost:5000/api/name')             // принимает один обязательный аргумент — путь к данным, которые вы хотите получить, и возвращает промис, который разрешается в ответе (Response) на запрос.
+                .then(response => response.text())              
+                .then(text => fio.innerHTML += text);          
+        </script>
+    </html>
+</DOCTYPE>
