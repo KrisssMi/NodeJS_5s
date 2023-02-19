@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Lab_10</title>
+    </head>
+    <body>
+        <h1>10-01</h1>
+        <button onclick="startWS()">startWS</button>
+        <div id="mess"></div>
+        <script>
+            var n=0;
+            var messageInterval;
+            function startWS() {
+                var socket = new WebSocket('ws://localhost:4000/ws');
+                socket.onopen = function() {
+                    console.log('Connected');
+                    messageInterval = setInterval(function() {
+                        socket.send(++n);}
+                        , 3000);
+                        setTimeout(() => {
+                            clearInterval(messageInterval);
+                            socket.close();
+                        }, 25000);
+                };
+                socket.onmessage = function(event) {
+                    console.log('Message: ' + event.data);
+                    document.getElementById('mess').innerHTML += event.data + '<br>';
+                };
+                soclet.onerror = function(error) {
+                    alert('Error: ' + error.message);
+                };
+            }
+        </script>
+    </body>
+</html>
