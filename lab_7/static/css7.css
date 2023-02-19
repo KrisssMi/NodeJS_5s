@@ -1,0 +1,26 @@
+header {
+    background: rgba(221, 29, 93, 0.8);
+}
+
+h1 {
+    color: aliceblue;
+    text-align: center;
+}
+
+label {
+    font-size: 40px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: rgba(91, 8, 37, 0.8);
+}
+
+.text {
+    color: rgba(211, 63, 135, 0.8);
+    text-decoration: underline;
+    font-family: "Comic Sans MS", serif;
+    font-size: larger;
+}
+
+.line_block {
+    float: left;
+    margin: 2%;
+}
